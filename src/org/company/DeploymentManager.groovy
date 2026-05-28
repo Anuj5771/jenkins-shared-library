@@ -6,7 +6,7 @@ class DeploymentManager {
     String environment
     String deploymentType
 
-    DeploymentManager(steps, String environment, String deploymentType) {
+    DeploymentManager(def steps, String environment, String deploymentType) {
         this.steps = steps
         this.environment = environment
         this.deploymentType = deploymentType
