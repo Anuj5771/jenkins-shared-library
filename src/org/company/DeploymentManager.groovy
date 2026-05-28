@@ -4,38 +4,31 @@ class DeploymentManager {
 
     String environment
 
-    // Constructor
     DeploymentManager(String environment) {
         this.environment = environment
     }
 
-    // Validate method
     def validate() {
-        println "Validating deployment for ${environment} environment"
+        echo "Validating deployment for ${environment}"
     }
 
-    // Deploy method
     def deploy() {
 
         if(environment == "dev") {
-            println "Deploying application to DEV environment"
+            echo "Deploying DEV"
         }
-
         else if(environment == "staging") {
-            println "Deploying application to STAGING environment"
+            echo "Deploying STAGING"
         }
-
         else if(environment == "prod") {
-            println "Deploying application to PRODUCTION environment"
+            echo "Deploying PROD"
         }
-
         else {
-            println "Invalid Environment"
+            echo "Invalid environment"
         }
     }
 
-    // Rollback method
     def rollback() {
-        println "Rollback deployment for ${environment}"
+        echo "Rollback ${environment}"
     }
 }
