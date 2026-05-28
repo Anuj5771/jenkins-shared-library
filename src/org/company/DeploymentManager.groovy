@@ -4,10 +4,12 @@ class DeploymentManager {
 
     def steps
     String environment
+    String deploymentType
 
-    DeploymentManager(steps, String environment) {
+    DeploymentManager(steps, String environment, String deploymentType) {
         this.steps = steps
         this.environment = environment
+        this.deploymentType = deploymentType
     }
 
     def validate() {
@@ -27,6 +29,20 @@ class DeploymentManager {
         }
         else {
             steps.echo "Invalid environment"
+            return
+        }
+
+        if(deploymentType == "rolling") {
+            steps.echo "Using Rolling Deployment Strategy"
+            steps.echo "Updating servers one by one"
+        }
+        else if(deploymentType == "blue-green") {
+            steps.echo "Using Blue-Green Deployment Strategy"
+            steps.echo "Deploying to GREEN environment"
+            steps.echo "Switching traffic from BLUE to GREEN"
+        }
+        else {
+            steps.echo "Invalid deployment type"
         }
     }
 
