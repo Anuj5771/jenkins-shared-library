@@ -9,26 +9,26 @@ class DeploymentManager {
     }
 
     def validate() {
-        echo "Validating deployment for ${environment}"
+        println "Validating deployment for ${environment} environment"
     }
 
     def deploy() {
 
         if(environment == "dev") {
-            echo "Deploying DEV"
+            println "Deploying DEV"
         }
         else if(environment == "staging") {
-            echo "Deploying STAGING"
+            println "Deploying STAGING"
         }
         else if(environment == "prod") {
-            echo "Deploying PROD"
+            println "Deploying PROD"
         }
         else {
-            echo "Invalid environment"
+            println "Invalid environment"
         }
     }
 
     def rollback() {
-        echo "Rollback ${environment}"
+        println "Rollback ${environment}"
     }
 }
