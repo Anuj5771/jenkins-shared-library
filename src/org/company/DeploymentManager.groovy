@@ -2,33 +2,35 @@ package org.company
 
 class DeploymentManager {
 
+    def steps
     String environment
 
-    DeploymentManager(String environment) {
+    DeploymentManager(steps, String environment) {
+        this.steps = steps
         this.environment = environment
     }
 
     def validate() {
-        println "Validating deployment for ${environment} environment"
+        steps.echo "Validating deployment for ${environment}"
     }
 
     def deploy() {
 
         if(environment == "dev") {
-            println "Deploying DEV"
+            steps.echo "Deploying DEV"
         }
         else if(environment == "staging") {
-            println "Deploying STAGING"
+            steps.echo "Deploying STAGING"
         }
         else if(environment == "prod") {
-            println "Deploying PROD"
+            steps.echo "Deploying PROD"
         }
         else {
-            println "Invalid environment"
+            steps.echo "Invalid environment"
         }
     }
 
     def rollback() {
-        println "Rollback ${environment}"
+        steps.echo "Rollback ${environment}"
     }
 }
