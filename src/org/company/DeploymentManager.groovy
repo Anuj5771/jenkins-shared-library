@@ -13,40 +13,42 @@ class DeploymentManager {
     }
 
     def validate() {
-        steps.echo "Validating deployment for ${environment}"
+        steps.sh 'docker ps'
     }
 
     def deploy() {
 
         if(environment == "dev") {
-            steps.echo "Deploying DEV"
+            steps.sh 'docker build -t attendance-dev .'
+            steps.sh 'docker run -d -p 8081:8081 --name attendance-dev-container attendance-dev'
         }
         else if(environment == "staging") {
-            steps.echo "Deploying STAGING"
+            steps.sh 'docker build -t attendance-staging .'
+            steps.sh 'docker run -d -p 8081:8081 --name attendance-staging-container attendance-staging'
         }
         else if(environment == "prod") {
-            steps.echo "Deploying PROD"
+            steps.sh 'docker build -t attendance-prod .'
+            steps.sh 'docker run -d -p 8081:8081 --name attendance-prod-container attendance-prod'
         }
         else {
-            steps.echo "Invalid environment"
+            steps.sh 'docker ps'
             return
         }
 
         if(deploymentType == "rolling") {
-            steps.echo "Using Rolling Deployment Strategy"
-            steps.echo "Updating servers one by one"
+            steps.sh 'docker ps'
         }
         else if(deploymentType == "blue-green") {
-            steps.echo "Using Blue-Green Deployment Strategy"
-            steps.echo "Deploying to GREEN environment"
-            steps.echo "Switching traffic from BLUE to GREEN"
+            steps.sh 'docker ps'
+            steps.sh 'docker images'
         }
         else {
-            steps.echo "Invalid deployment type"
+            steps.sh 'docker ps'
         }
     }
 
     def rollback() {
-        steps.echo "Rollback ${environment}"
+        steps.sh 'docker stop attendance-prod-container || true'
+        steps.sh 'docker rm attendance-prod-container || true'
     }
 }
