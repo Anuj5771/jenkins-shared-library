@@ -14,19 +14,14 @@ class StaticCodeAnalysis implements Serializable {
 
         steps.withSonarQubeEnv(config.sonar_server ?: "sonarqube") {
 
-            def cmd = """
-            ${scannerHome}/bin/sonar-scanner \
-            -Dsonar.projectKey=${config.projectKey} \
-            -Dsonar.projectName=${config.projectName} \
-            -Dsonar.sources=${config.sources} \
-            -Dsonar.sourceEncoding=UTF-8
+            steps.sh """
+                ${scannerHome}/bin/sonar-scanner \
+                -Dsonar.projectKey=${config.projectKey} \
+                -Dsonar.projectName=${config.projectName} \
+                -Dsonar.sources=${config.sources} \
+                ${config.binaries ? "-Dsonar.java.binaries=${config.binaries}" : ""} \
+                -Dsonar.sourceEncoding=UTF-8
             """
-
-            if (config.binaries) {
-                cmd += " -Dsonar.java.binaries=${config.binaries}"
-            }
-
-            steps.sh cmd
         }
     }
 }
